@@ -28,16 +28,16 @@ for i in gestures:
 x = np.array(x_)
 y = np.array(y_)
 y = np_utils.to_categorical(y)
-num_classes = y.shape[1]
+no_classes = y.shape[1]
 
 x , y = shuffle(x, y, random_state=0)
 
 
 split = int( 0.6*( x.shape[0] ) )
-train_features = x[ :split ]
-train_labels = y[ :split ]
-test_features = x[ split: ]
-test_labels = y[ split: ]
+t_feautres = x[ :split ]
+t_labels = y[ :split ]
+t2_feautres = x[ split: ]
+t2_labels = y[ split: ]
 
 
 model = Sequential()
@@ -57,14 +57,14 @@ model.add( Activation('relu') )
 model.add( Flatten() )
 
 model.add( Dropout(0.25) )
-model.add( Dense(num_classes) )
+model.add( Dense(no_classes) )
 
 model.add( Activation('softmax') )
 
 model.summary()
 
 model.compile( optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'] )
-model.fit( train_features, train_labels, validation_data=( test_features, test_labels ), shuffle=True, batch_size=128, nb_epoch=3 )
+model.fit( t_feautres, t_labels, validation_data=( t2_feautres, t2_labels ), shuffle=True, batch_size=128, nb_epoch=3 )
 
 model.save('model.h5')
 
