@@ -40,8 +40,8 @@ image_y = 125
 image_w = 200
 image_h = 200
 
-old_pred_text = ""
-pred_text = ""
+old_txt_pred = ""
+txt_pred = ""
 count_frames = 0
 tot_string = ""
 
@@ -61,20 +61,20 @@ while True:
         thresh = cv2.threshold(blur,210,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1]
         thresh = cv2.bitwise_not(thresh)
         
-        old_pred_text = pred_text
+        old_txt_pred = txt_pred
         
-        pred_text = predict(thresh)
+        txt_pred = predict(thresh)
         
-        if old_pred_text == pred_text:
+        if old_txt_pred == txt_pred:
             count_frames += 1
         else:
             count_frames = 0
         
         
         blackboard = np.zeros(frame.shape, dtype=np.uint8)
-        cv2.putText(blackboard, "Predicted text - ", (30, 40), cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 255, 0))
-        if count_frames > 20 and pred_text != "":
-            tot_string += pred_text + " "
+        cv2.putText(blackboard, "Text Prediction - ", (30, 40), cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 255, 0))
+        if count_frames > 20 and txt_pred != "":
+            tot_string += txt_pred + " "
             count_frames = 0
             
         cv2.putText(blackboard, tot_string, (30, 80), cv2.FONT_HERSHEY_TRIPLEX, 1, (255, 255, 127))
