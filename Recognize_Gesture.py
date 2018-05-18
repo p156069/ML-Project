@@ -3,11 +3,11 @@ import cv2
 import numpy as np
 from keras.models import load_model
 
-
+#Loading the model that was saved while training
 model = load_model('model.h5')
 
 
-
+#Initilizing dictionary 
 gesture = {
     0: "1",
     1: "2",
@@ -15,7 +15,7 @@ gesture = {
     3: "4"
 }
 
-
+#Predict function which get image as parameters and predict it's label and return the label
 def predict(hand):
     img = cv2.resize(hand, (50,50) )
     img = np.array(img)
@@ -26,15 +26,17 @@ def predict(hand):
     return gesture[ max_ind ]
 
 
-
+#Creating Window named image using Opencv
 cv2.namedWindow("image", cv2.WINDOW_NORMAL)
+#Creating Window named hand using Opencv
 cv2.namedWindow("hand", cv2.WINDOW_NORMAL)
 
-
+#Setting image capturing device id using Opencv
 vc = cv2.VideoCapture(0)
+#Reading frames from live video stream
 rval, frame = vc.read()
 
-
+#Setting dimension of box in window
 image_x = 350
 image_y = 125
 image_w = 200
@@ -44,6 +46,13 @@ old_txt_pred = ""
 txt_pred = ""
 count_frames = 0
 tot_string = ""
+
+# A loop where each captured image is applied number of functions like:
+#1)Converting image into Grayscale
+#2)Applying Gaussian Blur and Median blurr for reducing noise and image details
+#3)Applying Threshold to extract image from background
+#4)And passing image frames to predict function to predict its label
+#5)Creating a blackboard to print the image predicted label on it
 
 while True:
     
