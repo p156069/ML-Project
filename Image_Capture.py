@@ -4,21 +4,29 @@ import os
 
 
 
-cv2.namedWindow("image", cv2.WINDOW_NORMAL)
-cv2.namedWindow("hand", cv2.WINDOW_NORMAL)
+cv2.namedWindow("image", cv2.WINDOW_NORMAL) #Creating window named image
+cv2.namedWindow("hand", cv2.WINDOW_NORMAL) #Creating window named hand
 
-vc = cv2.VideoCapture(0)
-rval, frame = vc.read()
+vc = cv2.VideoCapture(0) #Set capturing device id
+rval, frame = vc.read()  #Reading Frame
 
-image_x = 700
+#Setting dimensions for box in window
+image_x = 700 
 image_y = 100
 image_w = 300
 image_h = 300
 pic_no = 0
 total_pic = 1200
-path = './dataset/2/'
+path = './dataset/2/' #Save image frames in this path
 
 flag_capturing = False
+
+#For each frame convert it into:
+#1) GrayScale
+#2) Apply Blurr function(Gasussian Blurr & Median Blurr)
+#3) Aplly threshold to extract hand gesture from background
+#4) Convert image frame into 50x50 dimension
+#5) Save the image frames into desired location
 
 while True:
     
